@@ -60,9 +60,9 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ token, domain }) => {
             <div className="w-full p-6">
               <div className="h-32 md:h-auto md:w-1/2 p-8">
                 <img
-                  className="h-full w-full"
+                  className="object-contain h-full w-full"
                   src="/logo_black.png"
-                  alt="img"
+                  alt="LAHIS logo"
                 />
               </div>
               <h1 className="mb-4 text-2xl font-bold text-center text-gray-700">

@@ -1,6 +1,7 @@
 import "styles/globals.css";
 import type { AppProps } from "next/app";
 import { observer } from "mobx-react";
+import Head from "next/head";
 
 import { ApolloProvider } from "@apollo/client/react";
 import { client } from "lib/client";
@@ -16,6 +17,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ApolloProvider client={client}>
       <ServicesContext.Provider value={servicesProvider}>
         <StoreContext.Provider value={store}>
+          <Head>
+            <title>LAHIS</title>
+          </Head>
           <Component {...pageProps} />
         </StoreContext.Provider>
       </ServicesContext.Provider>

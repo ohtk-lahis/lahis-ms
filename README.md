@@ -1,8 +1,12 @@
-# OHTK MS (Management System)
+# LAHIS MS (brand fork of OHTK Management System)
 
-A Next.js admin web app for the One Health Toolkit surveillance platform. It talks
-to the Django/GraphQL backend (`../ohtk-api`) and is multi-tenant — the effective
-backend is resolved at runtime from the `*.opensur.test` subdomain.
+Brand fork of [onehealthtoolkit/ohtk-ms](https://github.com/onehealthtoolkit/ohtk-ms)
+for the **LAHIS** product (`ohtk-lahis/lahis-ms`). Product bugfixes land upstream;
+brand assets and chrome live here.
+
+A Next.js admin web app for the surveillance platform. It talks to the Django/GraphQL
+backend and is multi-tenant — the effective backend is resolved at runtime from the
+tenant host (e.g. `*.opensur.test` locally, LAHIS hostnames in staging).
 
 ### What you'll need
 
@@ -16,8 +20,9 @@ backend is resolved at runtime from the `*.opensur.test` subdomain.
 ### Install
 
 ```bash
-git clone https://github.com/onehealthtoolkit/ohtk-ms.git
-cd ohtk-ms
+git clone https://github.com/ohtk-lahis/lahis-ms.git
+cd lahis-ms
+git remote add upstream git@github.com:onehealthtoolkit/ohtk-ms.git
 corepack enable
 yarn install
 ```

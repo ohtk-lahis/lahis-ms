@@ -490,10 +490,10 @@ const Sidebar: FC<{ mobilePosition: string }> = ({ mobilePosition }) => {
                 src="/logo_collapse.png"
                 width={40}
                 height={40}
-                alt="Onehealt toolkit logo"
+                alt="LAHIS logo"
               />
             ) : (
-              <img src="/logo.png" width={120} alt="Onehealt toolkit logo" />
+              <img src="/logo.png" width={120} alt="LAHIS logo" />
             )}
           </div>
         </div>

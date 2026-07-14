@@ -43,9 +43,9 @@ const Register = () => {
         <div className="flex flex-col items-center md:flex-row">
           <div className="h-32 md:h-auto md:w-1/2 p-8">
             <img
-              className="object-cover h-full w-full"
+              className="object-contain h-full w-full"
               src="/logo_black.png"
-              alt="img"
+              alt="LAHIS logo"
             />
           </div>
           <div className="h-screen flex items-center justify-center p-6 sm:p-12 md:w-1/2 overflow-y-auto">
