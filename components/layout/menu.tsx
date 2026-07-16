@@ -19,9 +19,9 @@ const MenuCollapsed: React.FC<MenuProps> = ({
   onClick,
 }) => {
   return (
-    <div className="group dropend relative">
+    <div className="group dropend relative shrink-0">
       <li
-        className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
+        className={`px-2 py-2 rounded-sm mb-0.5 last:mb-0 shrink-0 ${
           pathname === href && "bg-black"
         }`}
       >
@@ -38,10 +38,12 @@ const MenuCollapsed: React.FC<MenuProps> = ({
             }}
             href="#"
           >
-            <div className="flex items-center">
-              {icon}
+            <div className="flex items-center justify-center shrink-0">
+              <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center [&>svg]:h-5 [&>svg]:w-5">
+                {icon}
+              </span>
               <div className="group-hover:block absolute  hidden dropdown-menu w-auto h-auto z-50 top-0 left-12 bg-white shadow px-6 py-2">
-                <span className="text-sm font-medium ml-3 duration-200">
+                <span className="text-sm font-medium ml-3 duration-200 whitespace-nowrap">
                   {label}
                 </span>
               </div>
@@ -62,7 +64,7 @@ const MenuExpaned: React.FC<MenuProps> = ({
 }) => {
   return (
     <li
-      className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${
+      className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 shrink-0 ${
         pathname === href && "bg-black"
       }`}
     >
@@ -79,9 +81,11 @@ const MenuExpaned: React.FC<MenuProps> = ({
           }}
           href="#"
         >
-          <div className="flex items-center">
-            {icon}
-            <span className="text-sm font-medium ml-3 duration-200">
+          <div className="flex items-center min-w-0">
+            <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center [&>svg]:h-5 [&>svg]:w-5">
+              {icon}
+            </span>
+            <span className="text-sm font-medium ml-3 duration-200 truncate">
               {label}
             </span>
           </div>
