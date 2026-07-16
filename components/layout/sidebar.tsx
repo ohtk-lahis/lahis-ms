@@ -70,11 +70,7 @@ const Sidebar: FC<{ mobilePosition: string }> = ({ mobilePosition }) => {
         {() => (
           <>
             {/* Links — natural icon size; parent nav scrolls when needed */}
-            <div
-              className={
-                store.menu.collapsed ? "space-y-2" : "space-y-8"
-              }
-            >
+            <div className={store.menu.collapsed ? "space-y-2" : "space-y-8"}>
               <div className="shrink-0">
                 <h3
                   className={`text-xs uppercase text-slate-500 font-semibold pl-3 ${
