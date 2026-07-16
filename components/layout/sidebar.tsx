@@ -487,13 +487,21 @@ const Sidebar: FC<{ mobilePosition: string }> = ({ mobilePosition }) => {
           <div className="flex w-full items-center justify-center sticky mt-8 top-0 z-10">
             {store.menu.collapsed ? (
               <img
-                src="/logo_collapse.png"
+                src="/logo_mark.png"
                 width={40}
                 height={40}
                 alt="LAHIS logo"
+                className="object-contain"
               />
             ) : (
-              <img src="/logo.png" width={120} alt="LAHIS logo" />
+              // Transparent crest (no white plate) on navy sidebar — same idea as mobile logo_mark.
+              <img
+                src="/logo_mark.png"
+                width={120}
+                height={120}
+                alt="LAHIS logo"
+                className="object-contain"
+              />
             )}
           </div>
         </div>
