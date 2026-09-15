@@ -565,6 +565,7 @@
       "clusterDetectorEnabled": "ເປີດໃຊ້ຕົວກວດຈັບ Hotspot"
     }
   },
+
   "risk": {
     "title": "ຄວາມສ່ຽງ",
     "levelLabel": "ລະດັບຄວາມສ່ຽງ",

@@ -573,7 +573,6 @@ const Sidebar: FC<{ mobilePosition: string }> = ({ mobilePosition }) => {
     ),
     [store]
   );
-
   return (
     <div>
       {/* Sidebar */}
