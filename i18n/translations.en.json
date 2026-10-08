@@ -38,7 +38,8 @@
     "pagesCategory": "Pages",
     "reportsCategory": "Reports",
     "settingsCategory": "Settings",
-    "newReport": "New report"
+    "newReport": "New report",
+    "lahisSummarizedTable": "Summarized table"
   },
   "filter": {
     "searchButton": "Search",
