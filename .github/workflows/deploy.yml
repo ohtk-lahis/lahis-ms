@@ -72,7 +72,7 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
           REGISTRY_ALIAS: g0x0v6d0
-          REPOSITORY: ohtk-ms
+          REPOSITORY: lahis-ms
           IMAGE_TAG: latest
           IMAGE_TAG_SHA: ${{ github.sha }}
         run: |
