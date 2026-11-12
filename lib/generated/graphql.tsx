@@ -1968,6 +1968,7 @@ export type CaseType = {
   __typename?: "CaseType";
   aiSuspected: Scalars["String"]["output"];
   authorities?: Maybe<Array<Maybe<AuthorityType>>>;
+  caseNumber?: Maybe<Scalars["String"]["output"]>;
   closeOutcome?: Maybe<Scalars["String"]["output"]>;
   closePayload: Scalars["GenericScalar"]["output"];
   closeSource?: Maybe<Scalars["String"]["output"]>;
@@ -2419,6 +2420,8 @@ export type IncidentReportType = {
   aiSuspected: Scalars["String"]["output"];
   authorities?: Maybe<Array<Maybe<AuthorityType>>>;
   caseId?: Maybe<Scalars["UUID"]["output"]>;
+  caseNumber?: Maybe<Scalars["String"]["output"]>;
+  caseStatus?: Maybe<ReportCaseStatus>;
   coverImage?: Maybe<ImageType>;
   createdAt: Scalars["DateTime"]["output"];
   currentRiskAssessment?: Maybe<RiskAssessmentProjectionType>;
@@ -2426,6 +2429,8 @@ export type IncidentReportType = {
   definition?: Maybe<Scalars["GenericScalar"]["output"]>;
   followups?: Maybe<Array<Maybe<FollowupType>>>;
   gpsLocation?: Maybe<Scalars["String"]["output"]>;
+  /** Whether the current user has followup permission for this village scope. */
+  hasFollowupPermission: Scalars["Boolean"]["output"];
   id: Scalars["UUID"]["output"];
   images?: Maybe<Array<Maybe<ImageType>>>;
   incidentDate: Scalars["Date"]["output"];
@@ -3406,11 +3411,13 @@ export type MutationSubmitObservationSubjectArgs = {
   data: Scalars["GenericScalar"]["input"];
   definitionId: Scalars["Int"]["input"];
   gpsLocation?: InputMaybe<Scalars["String"]["input"]>;
+  recordId?: InputMaybe<Scalars["UUID"]["input"]>;
 };
 
 export type MutationSubmitObservationSubjectMonitoringArgs = {
   data: Scalars["GenericScalar"]["input"];
   monitoringDefinitionId: Scalars["Int"]["input"];
+  recordId?: InputMaybe<Scalars["UUID"]["input"]>;
   subjectId: Scalars["UUID"]["input"];
 };
 
@@ -3866,6 +3873,7 @@ export type QueryAdminAuthorityQueryArgs = {
 export type QueryAdminAuthorityUserQueryArgs = {
   after?: InputMaybe<Scalars["String"]["input"]>;
   authorities?: InputMaybe<Scalars["Decimal"]["input"]>;
+  authorityIds?: InputMaybe<Array<InputMaybe<Scalars["ID"]["input"]>>>;
   before?: InputMaybe<Scalars["String"]["input"]>;
   dateJoinedGte?: InputMaybe<Scalars["DateTime"]["input"]>;
   dateJoinedLte?: InputMaybe<Scalars["DateTime"]["input"]>;
@@ -4519,6 +4527,13 @@ export type Refresh = {
 export type RegisterFcmTokenMutation = {
   __typename?: "RegisterFcmTokenMutation";
   success?: Maybe<Scalars["Boolean"]["output"]>;
+};
+
+export type ReportCaseStatus = {
+  __typename?: "ReportCaseStatus";
+  closeOutcome: Scalars["String"]["output"];
+  closeSource: Scalars["String"]["output"];
+  isFinished: Scalars["Boolean"]["output"];
 };
 
 export type ReportDataSummaryType = {
@@ -5196,6 +5211,7 @@ export type CasesQuery = {
     results: Array<{
       __typename?: "CaseType";
       id: any;
+      caseNumber?: string | null;
       isFinished: boolean;
       statusLabel?: string | null;
       closeOutcome?: string | null;
@@ -5254,6 +5270,7 @@ export type GetCaseQuery = {
   caseGet?: {
     __typename?: "CaseType";
     id: any;
+    caseNumber?: string | null;
     description: string;
     isFinished: boolean;
     statusLabel?: string | null;
@@ -8566,6 +8583,7 @@ export type ReportsQuery = {
       incidentDate: any;
       rendererData: string;
       caseId?: any | null;
+      caseNumber?: string | null;
       gpsLocation?: string | null;
       testFlag: boolean;
       reportType?: {
@@ -9891,7 +9909,10 @@ export type UsersQueryVariables = Exact<{
   limit: Scalars["Int"]["input"];
   offset: Scalars["Int"]["input"];
   q?: InputMaybe<Scalars["String"]["input"]>;
-  authorities?: InputMaybe<Scalars["Decimal"]["input"]>;
+  authorities?: InputMaybe<
+    | Array<InputMaybe<Scalars["ID"]["input"]>>
+    | InputMaybe<Scalars["ID"]["input"]>
+  >;
   role?: InputMaybe<Scalars["String"]["input"]>;
   fromDate?: InputMaybe<Scalars["DateTime"]["input"]>;
   throughDate?: InputMaybe<Scalars["DateTime"]["input"]>;
@@ -12024,6 +12045,10 @@ export const CasesDocument = {
                       { kind: "Field", name: { kind: "Name", value: "id" } },
                       {
                         kind: "Field",
+                        name: { kind: "Name", value: "caseNumber" },
+                      },
+                      {
+                        kind: "Field",
                         name: { kind: "Name", value: "isFinished" },
                       },
                       {
@@ -12219,6 +12244,7 @@ export const GetCaseDocument = {
               kind: "SelectionSet",
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "caseNumber" } },
                 { kind: "Field", name: { kind: "Name", value: "description" } },
                 { kind: "Field", name: { kind: "Name", value: "isFinished" } },
                 { kind: "Field", name: { kind: "Name", value: "statusLabel" } },
@@ -26699,6 +26725,10 @@ export const ReportsDocument = {
                       },
                       {
                         kind: "Field",
+                        name: { kind: "Name", value: "caseNumber" },
+                      },
+                      {
+                        kind: "Field",
                         name: { kind: "Name", value: "gpsLocation" },
                       },
                       {
@@ -32819,7 +32849,10 @@ export const UsersDocument = {
             kind: "Variable",
             name: { kind: "Name", value: "authorities" },
           },
-          type: { kind: "NamedType", name: { kind: "Name", value: "Decimal" } },
+          type: {
+            kind: "ListType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
         },
         {
           kind: "VariableDefinition",
@@ -32887,7 +32920,7 @@ export const UsersDocument = {
               },
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "authorities" },
+                name: { kind: "Name", value: "authorityIds" },
                 value: {
                   kind: "Variable",
                   name: { kind: "Name", value: "authorities" },

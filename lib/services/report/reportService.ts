@@ -116,6 +116,7 @@ const ReportsListDocument = gql`
         incidentDate
         rendererData
         caseId
+        caseNumber
         gpsLocation
         reportType {
           id
@@ -136,6 +137,9 @@ const ReportsListDocument = gql`
           thumbnail
         }
         authorities {
+          name
+        }
+        village {
           name
         }
         currentRiskAssessment {
@@ -259,6 +263,7 @@ export class ReportService implements IReportService {
           rendererData: item.rendererData,
           reportTypeName: item.reportType?.name || "",
           caseId: item.caseId,
+          caseNumber: item.caseNumber,
           gpsLocation: item.gpsLocation,
           categoryName: item.reportType?.category?.name,
           categoryIcon: item.reportType?.category?.icon,
@@ -267,6 +272,7 @@ export class ReportService implements IReportService {
               ? item.images[0]?.thumbnail
               : null,
           authorityName: item.authorities?.map(item => item?.name).join(", "),
+          villageName: item.village?.name || undefined,
           testFlag: item.testFlag,
           currentRiskAssessment: mapRiskAssessment(item.currentRiskAssessment),
         });

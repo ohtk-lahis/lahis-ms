@@ -7,6 +7,7 @@ import tw from "tailwind-styled-components";
 import { ReportListViewModel } from "./listViewModel";
 import ErrorDisplay from "components/widgets/errorDisplay";
 import useServices from "lib/services/provider";
+import type { Report } from "lib/services/report";
 import Paginate from "components/widgets/table/paginate";
 import { formatDate, formatDateTime } from "lib/datetime";
 import ReportFilter from "./filter";
@@ -14,7 +15,7 @@ import Filter from "components/widgets/filter";
 import { isoStringToDate } from "lib/utils";
 import { ParsedUrlQuery } from "querystring";
 import useUrlParams from "lib/hooks/urlParams/useUrlParams";
-import CaseLink from "components/case/caseLink";
+import CaseNumberLink from "components/case/caseNumberLink";
 import { CalendarIcon, TableCellsIcon } from "@heroicons/react/24/solid";
 import Calendar from "components/widgets/calendar";
 import { ReportDayEvents } from "components/report/dayEvents";
@@ -198,6 +199,15 @@ const ReportList = () => {
                 <Table
                   columns={[
                     {
+                      label: t("form.label.caseNumber", "Case ID"),
+                      get: record => (
+                        <CaseNumberLink
+                          caseId={record.caseId}
+                          caseNumber={record.caseNumber}
+                        />
+                      ),
+                    },
+                    {
                       label: t("form.label.createdAt", "Created At"),
                       get: record =>
                         formatDateTime(record.createdAt, router.locale),
@@ -215,6 +225,18 @@ const ReportList = () => {
                       label: t("form.label.authorityName", "Authority Name"),
                       get: record => record.authorityName,
                     },
+                    ...(villageEnabled
+                      ? [
+                          {
+                            label: t("form.label.village", "Village"),
+                            get: (record: Report) => record.villageName,
+                          },
+                        ]
+                      : []),
+                    {
+                      label: t("form.label.data", "Data"),
+                      get: record => record.rendererData,
+                    },
                     {
                       label: t("form.label.risk", "Risk"),
                       get: record => (
@@ -224,14 +246,9 @@ const ReportList = () => {
                       ),
                     },
                     {
-                      label: t("form.label.data", "Data"),
-                      get: record => record.rendererData,
-                    },
-                    {
                       label: "",
                       get: record => (
                         <div className="flex flex-row gap-1">
-                          <CaseLink caseId={record.caseId} />
                           <TestLabel isTest={record.testFlag || false} />
                         </div>
                       ),
